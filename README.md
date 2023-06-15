@@ -24,10 +24,10 @@ After fitting the model to the training data, these were the results for the R-s
 
 |           | Training Data | Test Data |
 |-----------|---------------|-----------|
-| R-squared | 0.113         | 0.100     |
-| RMSE      | 590.263       | 635.378   |
+| R-squared | 0.102         | 0.121     |
+| RMSE      | 613.373       | 565.619   |
 
-As illustrated by these results, this baseline model is not a good predictor of calories. Only about 10% of the variance is explained by the predictors, and the average deviation from the actual values is about 600 calories, which is way off since most recipes are in the 0-2,000 calorie range. The features used in this model likely do not correlate strongly enough with calories to be a good predictor. Intuitively I thought there could be some relation, but the results suggest otherwise.
+As illustrated by these results, this baseline model is not a good predictor of calories. Only about 12% of the variance is explained by the predictors, and the average deviation from the actual values is about 566 calories, which is way off since most recipes are in the 0-2,000 calorie range. The features used in this model likely do not correlate strongly enough with calories to be a good predictor. Intuitively I thought there could be some relation, but the results suggest otherwise.
 
 # Final Model
 
@@ -43,14 +43,14 @@ To select the best hyperparameters, I used GridSearchCV with 4-fold validation. 
 
 | max_depth | criterion     |
 |-----------|---------------|
-| 5         | squared_error |
+| 7         | squared_error |
 
 Using these parameters, this was the performance of the model on the training and test data:
 
 |           | Training Data | Test Data |
 |-----------|---------------|-----------|
-| R-squared | 0.590         | 0.495     |
-| RMSE      | 405.269       | 459.771   |
+| R-squared | 0.651         | 0.456    |
+| RMSE      | 382.221       | 444.798   |
 
 It is clear that this model is a pretty large improvement over the baseline, although it is still not a 'good' model. The RMSE on the test data is about 200 less calories than on the baseline, which suggest a substantial improvement in the accuracy of the model. 
 
@@ -60,4 +60,4 @@ I will be looking at the model's fairness by measuring its performance on recipe
 
 To evaluate the fairness, I will calculate the difference in RMSE (North American - non-North American), and use a significance level of 0.01.
 
-After running a permutation test, I got a p-value of 0.381. Therefore I fail to reject the null hypothesis, and it is likely that this model treats North American and non-North American predictions fairly. 
+After running a permutation test, I got a p-value of 0.33. Therefore I fail to reject the null hypothesis, and it is likely that this model treats North American and non-North American predictions fairly. 
