@@ -37,10 +37,27 @@ The second feature I added was the 'n_ingredients' column, which I passed throug
 
 The modeling algorithm I chose for this is the scikit-learn DecisionTreeRegressor. This seemed like it would be an improvement over LinearRegression, as it supports non-linearity. With the final model being more complicated than the feature model, having non-linearity may be useful.
 
-The hyperparameters I decided to use were DecisionTreeRegressor's max_depth and criterion. When looking at DecisionTreeRegressor's documentation, these two parameters seemed to have the biggest influence on the model. For the criterion values, I used all possible values. For the max_depth values, I used low integers where the incrementation between values increased as the integers increased (up to 18). I also included None to see if having non max_depth could yield an optimal result.
+The hyperparameters I decided to use were DecisionTreeRegressor's max_depth and criterion. When looking at DecisionTreeRegressor's documentation, these two parameters seemed to have the biggest influence on the model. For the criterion values, I used all possible values except for 'absolute_error', due to it having extremely long computation time. For the max_depth values, I used low integers where the incrementation between values increased as the integers increased (up to 18). I also included None to see if having non max_depth could yield an optimal result.
 
 To select the best hyperparameters, I used GridSearchCV with 4-fold validation. I passed in the hyperparameter grid mentioned above. After fitting this search, the best parameters turned out to be:
 
+| max_depth | criterion     |
+|-----------|---------------|
+| 5         | squared_error |
 
+Using these parameters, this was the performance of the model on the training and test data:
+
+|           | Training Data | Test Data |
+|-----------|---------------|-----------|
+| R-squared | 0.590         | 0.495     |
+| RMSE      | 405.269       | 459.771   |
+
+It is clear that this model is a pretty large improvement over the baseline, although it is still not a 'good' model. The RMSE on the test data is about 200 less calories than on the baseline, which suggest a substantial improvement in the accuracy of the model. 
 
 # Fairness Analysis
+
+I will be looking at the model's fairness by measuring its performance on recipes with the 'north-american' tag and the recipes that do not.
+
+To evaluate the fairness, I will calculate the difference in RMSE (North American - non North American), and use a significance level of 0.05.
+
+After running a permutation test, I got a p-value of 0.381. Therefore I fail to reject the null hypothesis, and it is likely that this model treats North American and non-North American predictions fairly. 
