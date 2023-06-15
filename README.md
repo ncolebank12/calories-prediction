@@ -56,8 +56,8 @@ It is clear that this model is a pretty large improvement over the baseline, alt
 
 # Fairness Analysis
 
-I will be looking at the model's fairness by measuring its performance on recipes with the 'north-american' tag and the recipes that do not.
+I will be looking at the model's fairness by measuring its performance on recipes with the 'north-american' tag and the recipes that do not have this tag.
 
-To evaluate the fairness, I will calculate the difference in RMSE (North American - non-North American), and use a significance level of 0.05.
+To evaluate the fairness, I will calculate the difference in RMSE (North American - non-North American), and use a significance level of 0.01.
 
 After running a permutation test, I got a p-value of 0.381. Therefore I fail to reject the null hypothesis, and it is likely that this model treats North American and non-North American predictions fairly. 
