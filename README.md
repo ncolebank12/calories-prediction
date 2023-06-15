@@ -27,7 +27,7 @@ After fitting the model to the training data, these were the results for the R-s
 | R-squared | 0.113         | 0.100     |
 | RMSE      | 590.263       | 635.378   |
 
-As illustrated by these results, this baseline model is not a good predictor of calories. Only about 10% of the variance explained by the predictors, and the average deviation from the actual values is about 600 calories, which is way off since most recipes are in the 0-2,000 calorie range.
+As illustrated by these results, this baseline model is not a good predictor of calories. Only about 10% of the variance is explained by the predictors, and the average deviation from the actual values is about 600 calories, which is way off since most recipes are in the 0-2,000 calorie range. The features used in this model likely do not correlate strongly enough with calories to be a good predictor. Intuitively I thought there could be some relation, but the results suggest otherwise.
 
 # Final Model
 
@@ -58,6 +58,6 @@ It is clear that this model is a pretty large improvement over the baseline, alt
 
 I will be looking at the model's fairness by measuring its performance on recipes with the 'north-american' tag and the recipes that do not.
 
-To evaluate the fairness, I will calculate the difference in RMSE (North American - non North American), and use a significance level of 0.05.
+To evaluate the fairness, I will calculate the difference in RMSE (North American - non-North American), and use a significance level of 0.05.
 
 After running a permutation test, I got a p-value of 0.381. Therefore I fail to reject the null hypothesis, and it is likely that this model treats North American and non-North American predictions fairly. 
