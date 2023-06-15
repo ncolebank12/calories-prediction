@@ -4,7 +4,7 @@ Exploratory data analysis for this dataset can be found [here](https://ncolebank
 
 In this analysis, I will be examining how the calories of recipes can be best predicted. Since calories are a continuous variable, this will be a regression prediction problem. 
 
-The response variable is the first element in the 'nutrition' column, as this value corresponds to the calories for the recipe. I am interested to see what factors in this dataset influence the number of calories besides the macronutrient information (since this data can be used to directly calculate the number of calories in a recipe). 
+The response variable is the first element in the 'nutrition' column, as this value corresponds to the calories for the recipe. I am interested to see what factors in this dataset influence the number of calories besides the macronutrient information (since total fat, carbohydrates, and protein can be used to directly calculate the number of calories in a recipe). 
 
 The metric I will be using to evaluate the quality of the model is the Root Mean Square Error (RMSE). This will be best in comparing the baseline model to the final model as it will show the average deviation between the actual and predicted calories. Since it is difficult to evaluate a regression model's quality solely on the RMSE, I will also calculate the R^2 to see how much the predictor variables explain variation in the predicted values.
 
@@ -29,5 +29,17 @@ After fitting the model to the training data, these were the results for the R-s
 As illustrated by these results, this baseline model is not a good predictor of calories. Only about 10% of the variance explained by the predictors, and the average deviation from the actual values is about 600 calories, which is way off since most recipes are in the 0-2,000 calorie range.
 
 # Final Model
+
+To create the final model, I added two features to the model. The first feature I added was the recipe's sugar content, which is stored in the 'nutrition' column. I used a FunctionTransformer to extract the sugar info, which is stored as a percentage of the daily value (PDV%). I thought this would be a good predictor of calories as foods that are high in sugar tend to be high in calories.
+
+The second feature I added was the 'n_ingredients' column, which I passed through a QuantileTransformer. I did this to reduce the influence of the outliers. The reason why I chose to incorporate this feature is because recipes with more ingredients would seem to result in more food (in general). There are many cases where this would not be true, but as a general trend it seems like it could be a decent predictor.
+
+The modeling algorithm I chose for this is the scikit-learn DecisionTreeRegressor. This seemed like it would be an improvement over LinearRegression, as it supports non-linearity. With the final model being more complicated than the feature model, having non-linearity may be useful.
+
+The hyperparameters I decided to use were DecisionTreeRegressor's max_depth and criterion. When looking at DecisionTreeRegressor's documentation, these two parameters seemed to have the biggest influence on the model. For the criterion values, I used all possible values. For the max_depth values, I used low integers where the incrementation between values increased as the integers increased (up to 18). I also included None to see if having non max_depth could yield an optimal result.
+
+To select the best hyperparameters, I used GridSearchCV with 4-fold validation. I passed in the hyperparameter grid mentioned above. After fitting this search, the best parameters turned out to be:
+
+
 
 # Fairness Analysis
