@@ -21,6 +21,7 @@ With the ColumnTransformer object, I set remainder='drop' so that these were the
 I decided to use the LinearRegression object as the model at the end of the pipeline (which consists of a ColumnTransformer applying the transformations outlined above and the model itself).
 
 After fitting the model to the training data, these were the results for the R-squared and RMSE values:
+
 |           | Training Data | Test Data |
 |-----------|---------------|-----------|
 | R-squared | 0.113         | 0.100     |
